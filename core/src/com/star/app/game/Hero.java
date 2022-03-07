@@ -24,6 +24,7 @@ public class Hero {
     private int scoreView;
     private int hp;
     private int hpMax;
+    private int money;
     private StringBuilder sb;
     private Circle hitArea;
     private Weapon currentWeapon;
@@ -46,6 +47,14 @@ public class Hero {
 
     public float getAngle() {
         return angle;
+    }
+
+    public int getHpMax() {
+        return hpMax;
+    }
+
+    public int getMaxBullets() {
+        return currentWeapon.getMaxBullets();
     }
 
     public Hero(GameController gc) {
@@ -72,6 +81,21 @@ public class Hero {
         score += amount;
     }
 
+    public void addHp(int amount) {
+        hp += amount;
+        if (hp > hpMax) {
+            hp = hpMax;
+        }
+    }
+
+    public void addMoney(int amount) {
+        money += amount;
+    }
+
+    public void addBullets(int amount) {
+        currentWeapon.addCurBullets(amount);
+    }
+
     public void takeDamage(int amount) {
         hp -= amount;
     }
@@ -81,6 +105,7 @@ public class Hero {
         sb.append("SCORE: ").append(scoreView).append("\n");
         sb.append("HP: ").append(hp).append("/").append(hpMax).append("\n");
         sb.append("BULLETS: ").append(currentWeapon.getCurBullets()).append("/").append(currentWeapon.getMaxBullets()).append("\n");
+        sb.append("MONEY: ").append(money).append("\n");
         font.draw(batch, sb, 20, 700);
     }
 

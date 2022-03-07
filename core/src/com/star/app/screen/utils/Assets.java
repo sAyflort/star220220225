@@ -36,10 +36,10 @@ public class Assets {
     public void loadAssets(ScreenManager.ScreenType type) {
         switch (type) {
             case GAME:
-                assetManager.load("images/game.pack", TextureAtlas.class);
+                assetManager.load("images/game2.pack", TextureAtlas.class);
                 createStandardFont(32);
                 assetManager.finishLoading();
-                textureAtlas = assetManager.get("images/game.pack", TextureAtlas.class);
+                textureAtlas = assetManager.get("images/game2.pack", TextureAtlas.class);
                 break;
         }
     }
