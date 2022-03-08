@@ -123,9 +123,39 @@ public class Hero {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             angle += 180 * dt;
+
+            float bx = position.x + MathUtils.cosDeg(angle - 90) * 25 - MathUtils.cosDeg(angle) * 10;
+            float by = position.y + MathUtils.sinDeg(angle - 90) * 25 - MathUtils.sinDeg(angle) * 10;
+
+            for (int i = 0; i < 2; i++) {
+                rotaryMotor(bx, by, -500);
+            }
+
+
+            bx = position.x + MathUtils.cosDeg(angle + 90) * 25 - MathUtils.cosDeg(angle) * 10;
+            by = position.y + MathUtils.sinDeg(angle + 90) * 25 - MathUtils.sinDeg(angle) * 10;
+
+            for (int i = 0; i < 2; i++) {
+                rotaryMotor(bx, by, 500);
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             angle -= 180 * dt;
+
+            float bx = position.x + MathUtils.cosDeg(angle + 90) * 25 - MathUtils.cosDeg(angle) * 10;
+            float by = position.y + MathUtils.sinDeg(angle + 90) * 25 - MathUtils.sinDeg(angle) * 10;
+
+            for (int i = 0; i < 2; i++) {
+                rotaryMotor(bx, by, -500);
+            }
+
+
+            bx = position.x + MathUtils.cosDeg(angle - 90) * 25 - MathUtils.cosDeg(angle) * 10;
+            by = position.y + MathUtils.sinDeg(angle - 90) * 25 - MathUtils.sinDeg(angle) * 10;
+
+            for (int i = 0; i < 2; i++) {
+                rotaryMotor(bx, by, 500);
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             velocity.x += MathUtils.cosDeg(angle) * enginePower * dt;
@@ -182,6 +212,15 @@ public class Hero {
         velocity.scl(stopKoef);
 
         checkBorders();
+    }
+
+    public void rotaryMotor(float bx, float by, float velocityParticle) {
+        gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                -velocity.x * -0.1f + velocityParticle * MathUtils.cosDeg(angle) + MathUtils.random(-20, 20), velocity.y * -0.1f + velocityParticle * MathUtils.sinDeg(angle) + MathUtils.random(-20, 20),
+                0.1f,
+                1.2f, 0.2f,
+                0.0f, 0.5f, 0.7f, 1.0f,
+                1.0f, 0.7f, 0.7f, 0.0f);
     }
 
     private void updateScore(float dt) {
