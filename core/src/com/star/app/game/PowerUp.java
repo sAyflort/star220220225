@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.star.app.game.helpers.Poolable;
 import com.star.app.screen.utils.Assets;
 
@@ -32,11 +33,17 @@ public class PowerUp implements Poolable {
     private float time;
     private float angle;
     private float rotation = 60;
+    private Vector3 colorParticular;
     private boolean flag;
+    private PowerUpController powerUpController;
 
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Vector3 getColorParticular() {
+        return colorParticular;
     }
 
     public float getSize() {
@@ -64,10 +71,12 @@ public class PowerUp implements Poolable {
         return active;
     }
 
-    public PowerUp() {
+    public PowerUp(PowerUpController powerUpController) {
         this.active = false;
         this.position = new Vector2();
         this.putArea = new Circle();
+        this.colorParticular = new Vector3();
+        this.powerUpController = powerUpController;
     }
 
     public void activate(float x, float y) {
@@ -75,13 +84,16 @@ public class PowerUp implements Poolable {
             case 0: texture = Assets.getInstance().getAtlas().findRegion(TYPE.HEAL.name);
                 putArea.setRadius(TYPE.HEAL.radius);
                 name = TYPE.HEAL.name;
+                colorParticular.set(1, 0, 0);
                 break;
             case 1: texture = Assets.getInstance().getAtlas().findRegion(TYPE.AMMO.name);
                 putArea.setRadius(TYPE.AMMO.radius);
                 name = TYPE.AMMO.name;
+                colorParticular.set(0, 1, 0);
                 break;
             case 2: texture = Assets.getInstance().getAtlas().findRegion(TYPE.MONEY.name);
                 putArea.setRadius(TYPE.MONEY.radius);
+                colorParticular.set(0, 0, 1);
                 name = TYPE.MONEY.name;
         }
         position.set(x, y);
@@ -90,6 +102,13 @@ public class PowerUp implements Poolable {
         angle = 0;
         flag = true;
         active = true;
+
+        for (int i = 0; i < 360; i+=30) {
+            powerUpController.getParticleController().setup(position.x, position.y, 60*MathUtils.cosDeg(i),
+                    60*MathUtils.sinDeg(i), 1, 1, 2, colorParticular.x, colorParticular.y,
+                    colorParticular.z ,1, colorParticular.x, colorParticular.y,
+                    colorParticular.z, 0);
+        }
     }
 
     public void deactivate() {
@@ -119,6 +138,5 @@ public class PowerUp implements Poolable {
                 time = 0;
             }
         }
-
     }
 }

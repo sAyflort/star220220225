@@ -127,7 +127,7 @@ public class Hero {
             float bx = position.x + MathUtils.cosDeg(angle - 90) * 25 - MathUtils.cosDeg(angle) * 10;
             float by = position.y + MathUtils.sinDeg(angle - 90) * 25 - MathUtils.sinDeg(angle) * 10;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 rotaryMotor(bx, by, -500);
             }
 
@@ -135,7 +135,7 @@ public class Hero {
             bx = position.x + MathUtils.cosDeg(angle + 90) * 25 - MathUtils.cosDeg(angle) * 10;
             by = position.y + MathUtils.sinDeg(angle + 90) * 25 - MathUtils.sinDeg(angle) * 10;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 rotaryMotor(bx, by, 500);
             }
         }
@@ -145,7 +145,7 @@ public class Hero {
             float bx = position.x + MathUtils.cosDeg(angle + 90) * 25 - MathUtils.cosDeg(angle) * 10;
             float by = position.y + MathUtils.sinDeg(angle + 90) * 25 - MathUtils.sinDeg(angle) * 10;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 rotaryMotor(bx, by, -500);
             }
 
@@ -153,7 +153,7 @@ public class Hero {
             bx = position.x + MathUtils.cosDeg(angle - 90) * 25 - MathUtils.cosDeg(angle) * 10;
             by = position.y + MathUtils.sinDeg(angle - 90) * 25 - MathUtils.sinDeg(angle) * 10;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 rotaryMotor(bx, by, 500);
             }
         }
@@ -215,9 +215,9 @@ public class Hero {
     }
 
     public void rotaryMotor(float bx, float by, float velocityParticle) {
-        gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+        gc.getParticleController().setup(bx + MathUtils.random(-3, 3), by + MathUtils.random(-3, 3),
                 -velocity.x * -0.1f + velocityParticle * MathUtils.cosDeg(angle) + MathUtils.random(-20, 20), velocity.y * -0.1f + velocityParticle * MathUtils.sinDeg(angle) + MathUtils.random(-20, 20),
-                0.1f,
+                0.075f,
                 1.2f, 0.2f,
                 0.0f, 0.5f, 0.7f, 1.0f,
                 1.0f, 0.7f, 0.7f, 0.0f);

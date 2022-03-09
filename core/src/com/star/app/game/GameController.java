@@ -42,7 +42,7 @@ public class GameController {
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
         this.particleController = new ParticleController();
-        this.powerUpController = new PowerUpController();
+        this.powerUpController = new PowerUpController(particleController);
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
 
