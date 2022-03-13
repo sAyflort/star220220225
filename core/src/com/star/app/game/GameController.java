@@ -9,6 +9,7 @@ public class GameController {
     private BulletController bulletController;
     private AsteroidController asteroidController;
     private ParticleController particleController;
+    private PowerUpController powerUpController;
     private Hero hero;
     private Vector2 tempVec;
 
@@ -24,6 +25,10 @@ public class GameController {
         return bulletController;
     }
 
+    public PowerUpController getPowerUpController() {
+        return powerUpController;
+    }
+
     public Background getBackground() {
         return background;
     }
@@ -37,6 +42,7 @@ public class GameController {
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
         this.particleController = new ParticleController();
+        this.powerUpController = new PowerUpController(particleController);
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
 
@@ -52,6 +58,7 @@ public class GameController {
         bulletController.update(dt);
         asteroidController.update(dt);
         particleController.update(dt);
+        powerUpController.update(dt);
         hero.update(dt);
         checkCollisions();
     }
@@ -98,6 +105,23 @@ public class GameController {
                     }
                     break;
                 }
+            }
+        }
+        //столкновение героя и бонусов
+        for (int i = 0; i < powerUpController.getActiveList().size(); i++) {
+            PowerUp p = powerUpController.getActiveList().get(i);
+            if(p.getPutArea().overlaps(hero.getHitArea())) {
+                switch (p.getName()) {
+                    case "heal":
+                        hero.addHp(MathUtils.random((int)(0.1*hero.getHpMax()), (int)(0.25*hero.getHpMax())));
+                        break;
+                    case  "ammo":
+                        hero.addBullets(MathUtils.random((int)(0.1*hero.getMaxBullets()), (int)(0.25*hero.getMaxBullets())));
+                        break;
+                    case "bitcoin":
+                        hero.addMoney(MathUtils.random(10, 100));
+                }
+                p.deactivate();
             }
         }
     }

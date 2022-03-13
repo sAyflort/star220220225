@@ -112,6 +112,9 @@ public class Asteroid implements Poolable {
                 gc.getAsteroidController().setup(position.x, position.y,
                         MathUtils.random(-150, 150), MathUtils.random(-150, 150), scale - 0.3f);
             }
+            if(MathUtils.random(100) < 30) {
+                gc.getPowerUpController().setup(position.x, position.y);
+            }
             return true;
         } else {
             return false;
